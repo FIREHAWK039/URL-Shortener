@@ -7,10 +7,12 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^5.2.1",
-    "mongoose": "^9.7.0"
+    "mongoose": "^9.7.0",
+    "nanoid": "^5.1.15",
+    "shortid": "^2.2.17"
   }
 }
