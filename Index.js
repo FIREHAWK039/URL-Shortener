@@ -14,11 +14,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.resolve("./views",))
 
 
-app.get('/test', async(req, res) => {
-    const allURL = await URL.find({});
-    return res.render("home")
 
-})
 
 app.use(express.json());
 app.use(express.urlencoded({ extended:  false }));
