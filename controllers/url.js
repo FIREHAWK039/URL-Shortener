@@ -25,7 +25,14 @@ async function handleGetAnalytics(req, res) {
         analytics: result.visitHistory,
      }); 
     }
+
+async function handelDeleteUserById(req, response) {
+    await User.findByIdAndDelete(req.params.id)
+    return response.json({ status: "success" })
+}
+
 module.exports = {
     handleGenerateNewShortURL,
-    handleGetAnalytics
+    handleGetAnalytics,
+    handelDeleteUserById
 };

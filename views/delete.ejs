@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage URLs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #f5f5f5;
+        }
+        h1, h2 { color: #333; }
+        .message {
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error   { background: #f8d7da; color: #721c24; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #343a40;
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #dee2e6;
+            word-break: break-all;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8f9fa; }
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-delete:hover { background: #b02a37; }
+        .no-urls {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            background: white;
+            border-radius: 8px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .section-header h2 { margin: 0; }
+    </style>
+</head>
+<body>
+
+    <h1>Manage Short URLs</h1>
+
+    <% if (message) { %>
+        <div class="message error"><%= message %></div>
+    <% } %>
+    <% if (success) { %>
+        <div class="message success">✅ Deleted successfully!</div>
+    <% } %>
+
+    <div class="section-header">
+        <h2>All URLs (<%= urls.length %>)</h2>
+        <% if (urls.length > 0) { %>
+        <form method="POST" action="/url/delete-all"
+              onsubmit="return confirm('Permanently delete ALL URLs? This cannot be undone!')">
+            <button type="submit" class="btn-delete">🗑 Delete All</button>
+        </form>
+        <% } %>
+    </div>
+
+    <% if (urls.length === 0) { %>
+        <div class="no-urls">No URLs found in the database.</div>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Short ID</th>
+                    <th>Redirect URL</th>
+                    <th>Visits</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% urls.forEach(function(url) { %>
+                <tr>
+                    <td><strong><%= url.shortId %></strong></td>
+                    <td><a href="<%= url.redirectUrl %>" target="_blank"><%= url.redirectUrl %></a></td>
+                    <td><%= url.visitHistory.length %></td>
+                    <td><%= new Date(url.createdAt).toLocaleString() %></td>
+                    <td>
+                        <form method="POST" action="/url/delete" onsubmit="return confirmDelete(this)">
+                            <input type="hidden" name="shortId" value="<%= url.shortId %>">
+                            <button type="submit" class="btn-delete">🗑 Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <script>
+        function confirmDelete(form) {
+            const shortId = form.querySelector('input[name="shortId"]').value;
+            return confirm('Permanently delete ' + shortId + '? This cannot be undone!');
+        }
+    </script>
+
+</body>
+</html>
