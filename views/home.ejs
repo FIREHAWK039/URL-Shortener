@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <style>
-        body{
+        body {
             font-family: Arial, sans-serif;
         }
     </style>
@@ -10,27 +11,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>URL Shortener</h1>
-   <div> <% if (locals.id) { %>
-         <p>Shortened URL: http://localhost:8001/url<%= id %> </p>
-     
-    <% } %>
-   </div>
+    <% urls.forEach(url=> { %>
+        <li>
+            <%= url.shortId %>
+        </li>
 
-    <div>
-        <form method="POST" action="/url">
-            <label>Enter Original URL:</label>
-                <input
-                type="text" 
-                placeholder="WWW.example.com" 
-                name="url"
-                />
-                <button type="submit">Generate</button>
+        <% }) %>
 
             
-            
-        </form>
-        </div>
 </body>
+
 </html>
