@@ -25,9 +25,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/test", async (req, res) => {
     const allUrls = await URL.find({});
-    return res.render("home", {
-        urls: allUrls
-    });
+    return res.render("home",{
+        urls: allUrls, 
+    })
 });
 
 app.use('/url', urlRoute);
@@ -35,7 +35,7 @@ app.use('/url', urlRoute);
 
 app.use("/", staticRouter);
 
-app.get('/:shortId', async (req, res) => {
+app.get('/url/:shortId', async (req, res) => {
     const shortId = req.params.shortId;
     const Entry = await URL.findOneAndUpdate(
         {
@@ -46,6 +46,9 @@ app.get('/:shortId', async (req, res) => {
         },
     }
     )
+     if (!Entry) {
+        return res.status(404).json({ error: "Short URL not found" });
+     }
     res.redirect(Entry.redirectUrl)
 })
 
