@@ -14,28 +14,21 @@
 
 <body>
     <h1>URL Shortener</h1>
-
-    <% urls.forEach(url => { %>
-        <li><%= url.shortId %></li>
-     
-    <% }) %>
-    <!-- <div>
-        <form method="DELETE" action="/users/:id">
-            <label>Enter id:</label>
-            <input type="text" placeholder="rgr0rgw3_" name="id" />
+    <% if (locals.id) { %>
+        <p>
+            URL generated: http://localhost/url/<%= id> 
+            </p>
+    <% } %>   
+    <div>
+        <form method="POST" action="/url">
+            <label>Enter original url</label>
+            <input type="text" placeholder="http://xyz.com" name="url" />
             <button type="submit">Generate</button>
 
 
 
-        </form> -->
+        </form>
     </div>
 </body>
 
 </html>
-
-<!-- <%# urls.forEach(url=> { %>
-    <li>
-        <%#= url.shortId %>
-    </li>
-
-    <%# }) %> -->
