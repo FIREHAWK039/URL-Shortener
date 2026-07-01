@@ -39,8 +39,8 @@ app.get('/url/:shortId', async (req, res) => {
     const shortId = req.params.shortId;
     const Entry = await URL.findOneAndUpdate(
         {
-            shortId
-        }, {
+            shortId 
+        }, { 
         $push: {
             visitHistory: { timestamp: Date.now() }
         },
