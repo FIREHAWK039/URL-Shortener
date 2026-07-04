@@ -19,10 +19,11 @@ async function handleGenerateNewShortURL(req, res) {
    } catch (error) {
      if (error.code === 11000) {
             // duplicate redirectUrl — fetch the existing one
-            const existing = await URL.findOne({ redirectUrl });
+            const existing = await URL.findOne({  redirectUrl: req.body.url });
             return res.status(200).json({
                 shortId: existing.shortId,
                 message: "This URL was already shortened"
+                
             });
         }
     
