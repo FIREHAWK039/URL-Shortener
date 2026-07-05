@@ -3,10 +3,12 @@ const app = express();
 const PORT = 8001
 const { connectToDB } = require("./connect");
 const path = require("path");
-const urlRoute = require("./routes/url");
 const URL = require("./models/url");
 
+
+const urlRoute = require("./routes/url");
 const staticRouter = require("./routes/staticRouter");
+const userRoute = require("./routes/user")
 
 connectToDB("mongodb://127.0.0.1:27017/short-url").then(() => console.log("Connected to DB"))
 
@@ -31,8 +33,7 @@ app.get("/test", async (req, res) => {
 });
 
 app.use('/url', urlRoute);
-
-
+app.use('/user', userRoute);
 app.use("/", staticRouter);
 
 app.get('/url/:shortId', async (req, res) => {
