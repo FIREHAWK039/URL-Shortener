@@ -47,29 +47,8 @@ async function handleGetAnalytics(req, res) {
 
 
 
-async function handleDuplicateUrl(req, res) {
-    const { redirectUrl } = req.body;
-
-    try {
-        // check if this long URL already has a short ID
-        const existing = await URL.findOne({ redirectUrl });
-
-        if (existing) {
-            return res.status(200).json
-                ({
-                    shortId: existing.shortId,
-                    message: "This URL was already shortened"
-                });
-        }
-    }
-    catch (err) {
-        return res.status(500).json({ error: "Something went wrong" });
-    }
-
-}
 
 module.exports = {
     handleGenerateNewShortURL,
     handleGetAnalytics,
-    handleDuplicateUrl
     };
